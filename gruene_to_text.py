@@ -1,7 +1,7 @@
 from lxml import html
 import re
 
-fh = open('html/linke.html', 'rb')
+fh = open('html/gruene.html', 'rb')
 html_ = fh.read()
 html_ = html_.replace('-<br/>', '')
 html_ = html_.replace('&#160;', ' ')
@@ -13,32 +13,28 @@ text = []
 
 for el in doc.findall('.//body/div/*'):
     ecls = el.get('class') or ''
-    if len(el.findall('.//i')):
-        continue
     #print [ecls, ]
     eltext = el.text_content().strip()
-    if ecls == 'ft00' or ecls == 'ft03' or el.tag == 'img':
+    if ecls in ['ft00', 'ft03', 'ft09', 'ft05'] or el.tag == 'img':
         # or ecls == 'ft05':
         #text.append(NEWPAGE)
         continue
     #elif ecls == 'ft01' or el.tag == 'img':
     #    continue
-    elif ecls == 'ft01':
+    elif ecls == 'ft06' or ecls == 'ft01':
         #eltext = eltext.upper().strip()
         if eltext and len(eltext.strip()):
-            text.append('\n# ' + eltext + '\n\n')
+            text.append('\n\n# ' + eltext + '\n\n')
         if el.tail is not None:
             text.append(el.tail.strip())
-    elif ecls == 'ft06':
+    elif ecls == 'ft08' or ecls == 'ft013':
         #eltext = eltext.upper().strip()
         if eltext and len(eltext.strip()):
-            text.append('\n## ' + eltext + '\n\n')
+            text.append('\n\n## ' + eltext + '\n\n')
         if el.tail is not None:
             text.append(el.tail.strip())
     elif el.tag == 'p':
         if 'left:369px' in el.get('style', ''):
-            eltext = '\n* ' + eltext
-        if 'left:94px' in el.get('style', ''):
             eltext = '\n* ' + eltext
         if eltext is not None:
             text.append(eltext)
@@ -49,10 +45,10 @@ for el in doc.findall('.//body/div/*'):
         #pass
         print [el.tag, el.text, el.tail]
 
-fh = open('markdown/linke.mdown', 'wb')
+fh = open('markdown/gruene.mdown', 'wb')
 text = '\n'.join(text)
 
-text = text.replace('\n\n\n', '\n')
+text = text.replace('\n\n', '\n')
 text = text.replace('-\n', '')
 
 while True:
