@@ -33,7 +33,7 @@ fh = open('markdown/cdu.mdown', 'wb')
 text = '\n'.join(text)
 text = text.replace('\n\n', '\n')
 text = text.replace('\n\n' + NEWPAGE + '\n\n', '')
-text = re.sub('# ([0-9]+.).\n\n# ', '# \g<1> ', text)
+text = re.sub('(#+ .*)\n\n#+ ', '\g<1> ', text)
 text = text.replace('-\n\n# ', '')
 text = text.replace(NEWPAGE, '')
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
@@ -48,6 +48,9 @@ for line in text.split('\n'):
         line = '##' + line
     texts.append(line)
 text = '\n'.join(texts)
+
+while '  ' in text:
+    text = text.replace('  ', ' ')
 
 fh.write(text.encode('utf-8'))
 fh.close()

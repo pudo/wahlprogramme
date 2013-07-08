@@ -29,7 +29,11 @@ for el in doc.findall('.//body/div/*'):
             text.append('\n# ' + eltext + '\n\n')
         if el.tail is not None:
             text.append(el.tail.strip())
-    elif ecls == 'ft06':
+    elif ecls == 'ft06' or ecls == 'ft04':
+        btext = el.find('./b').text.strip()
+        if len(btext) < 5 and btext.endswith(')'):
+            text.append('\n' + eltext)
+            continue
         #eltext = eltext.upper().strip()
         if eltext and len(eltext.strip()):
             text.append('\n## ' + eltext + '\n\n')
@@ -39,6 +43,8 @@ for el in doc.findall('.//body/div/*'):
         if 'left:369px' in el.get('style', ''):
             eltext = '\n* ' + eltext
         if 'left:94px' in el.get('style', ''):
+            eltext = '\n* ' + eltext
+        if 'left:73px' in el.get('style', ''):
             eltext = '\n* ' + eltext
         if eltext is not None:
             text.append(eltext)
@@ -53,25 +59,28 @@ fh = open('markdown/linke.mdown', 'wb')
 text = '\n'.join(text)
 
 text = text.replace('\n\n\n', '\n')
+
+while True:
+    ntext = re.sub('# (.*)\n\n\n?# ', '# \g<1> ', text)
+    if ntext == text:
+        break
+    text = ntext
+
+
+while True:
+    ntext = re.sub('## (.*)\n\n\n?## ', '## \g<1> ', text)
+    if ntext == text:
+        break
+    text = ntext
+
 text = text.replace('-\n', '')
-
-while True:
-    ntext = re.sub('# (.*)\n\n\n# ', '# \g<1> ', text)
-    if ntext == text:
-        break
-    text = ntext
-
-
-while True:
-    ntext = re.sub('## (.*)\n\n\n## ', '## \g<1> ', text)
-    if ntext == text:
-        break
-    text = ntext
 
 #text = re.sub('# ([0-9]+.).\n\n# ', '# \g<1> ', text)
 #text = text.replace('-\n\n# ', '')
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
 
+while '  ' in text:
+    text = text.replace('  ', ' ')
 
 fh.write(text.encode('utf-8'))
 fh.close()

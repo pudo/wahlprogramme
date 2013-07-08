@@ -57,7 +57,6 @@ while True:
         break
     text = ntext
 
-
 while True:
     ntext = re.sub('## (.*)\n\n\n## ', '## \g<1> ', text)
     if ntext == text:
@@ -67,6 +66,9 @@ while True:
 #text = text.replace('-\n\n# ', '')
 text = text.replace(NEWPAGE, '')
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
+
+while '  ' in text:
+    text = text.replace('  ', ' ')
 
 #texts = []
 #for line in text.split('\n'):

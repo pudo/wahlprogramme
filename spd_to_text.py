@@ -66,6 +66,9 @@ while True:
 
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
 
+while '  ' in text:
+    text = text.replace('  ', ' ')
+
 #texts = []
 #for line in text.split('\n'):
 #    if re.match('# \d+. .*', line):

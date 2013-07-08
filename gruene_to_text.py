@@ -68,6 +68,8 @@ while True:
 #text = text.replace('-\n\n# ', '')
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
 
+while '  ' in text:
+    text = text.replace('  ', ' ')
 
 fh.write(text.encode('utf-8'))
 fh.close()
