@@ -21,5 +21,5 @@ if __name__ == '__main__':
         pprint(dict(topics))
         print "TOTAL", sum(topics.values())
         result[party] = dict(topics)
-    with open('json/topic_shares.json', 'wb') as fh:
+    with open('data/topic_shares.json', 'wb') as fh:
         json.dump(result, fh)

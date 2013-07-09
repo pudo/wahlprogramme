@@ -1,0 +1,6 @@
+Freiheit: freiheit,freiheiten,freiheitlich,wahlfreiheit,wahlfreiheiten
+Sicherheit: sicherheit,sicherheiten
+Gleichheit: gleichheit,gleichberechtigung,gleichstellung
+Toleranz: toleranz,tolerant
+Offenheit: offenheit,offen
+Demokratie: demokratie,demokratisch

@@ -1,6 +1,8 @@
+import os
 import json
-from common import PARTIES, load_doc, nomenklatura
+from common import PARTIES, load_doc
 from text import tokenize
+from nomenklatura import Dataset
 
 
 class Section(object):
@@ -36,6 +38,9 @@ class Section(object):
             'topic': self.topic
         }
 
+    def __len__(self):
+        return len(self.tokens)
+
     @classmethod
     def from_json(cls, d):
         obj = cls(d['party'])
@@ -51,6 +56,9 @@ class Section(object):
 
 def extract_sections(party):
     doc = load_doc(party)
+
+    nomenklatura = Dataset('btw13-titles',
+                           api_key=os.environ.get('NOMENKLATURA_API_KEY'))
 
     current = Section(party)
     for i, h in enumerate(doc.findall('.//*')):
@@ -74,7 +82,7 @@ def extract_sections(party):
 
 def load_platforms():
     sections = {}
-    with open('json/sections.json', 'rb') as fh:
+    with open('data/sections.json', 'rb') as fh:
         data = json.load(fh)
         for party in PARTIES:
             sections[party] = []
@@ -86,10 +94,13 @@ def load_platforms():
 
 if __name__ == '__main__':
     data = {}
+    sections = {}
     for party in PARTIES:
         data[party] = []
+        sections[party] = []
         for section in extract_sections(party):
             print [section.party, section.topic, section.title, str(len(section.tokens))     + ' Worte']
             data[party].append(section.to_json())
-    with open('json/sections.json', 'wb') as fh:
+            sections[party].append(section)
+    with open('data/sections.json', 'wb') as fh:
         json.dump(data, fh)
