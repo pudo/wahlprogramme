@@ -1,0 +1,17 @@
+{
+    "cdu": {
+        "name": "CDU/CSU"
+    },
+    "spd": {
+        "name": "SPD"
+    },
+    "fdp": {
+        "name": "FDP"
+    },
+    "gruene": {
+        "name": "Bündnis 90/Die Grünen"
+    },
+    "linke": {
+        "name": "Die LINKE."
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "arbeitspolitik": {
+        "name": "Arbeitsmarkt und Beschäftigung",
+        "color": "#CD531C"
+    },
+    "aussenpolitik_verteidigung": {
+        "name": "Aussenpolitik und Verteidigung",
+        "color": "#211D79"
+    },
+    "umwelt_energie": {
+        "name": "Umwelt und Energiepolitik",
+        "color": "#6AAC32"
+    },
+    "europa": {
+        "name": "Europapolitik",
+        "color": "#14388C"
+    },
+    "familienpolitik": {
+        "name": "Familienpolitik",
+        "color": "#C22769"
+    },
+    "fiskal_steuern": {
+        "name": "Steuern und Fiskalpolitik",
+        "color": "#A5B425"
+    },
+    "forschung_bildung": {
+        "name": "Bildung und Forschung",
+        "color": "#2458A3"
+    },
+    "gesundheit": {
+        "name": "Gesundheit",
+        "color": "#42928F"
+    },
+    "intro": {
+        "name": "Einleitung, Fazit",
+        "color": "#ddd"
+    },
+    "kultur_sport": {
+        "name": "Kultur, Medien und Sport",
+        "color": "#E29826"
+    },
+    "landwirtschaft_verbraucherschutz": {
+        "name": "Landwirtschaft und Verbraucherschutz",
+        "color": "#449256"
+    },
+    "recht": {
+        "name": "Recht, Integration, Gleichberechtigung und Inneres",
+        "color": "#C22769"
+    },
+    "verkehr_stadt": {
+        "name": "Verkehr und Stadtentwicklung",
+        "color": "#3F93E1"
+    },
+    "soziales": {
+        "name": "Sozialversicherung und Renten",
+        "color": "#CA221D"
+    },
+    "demokratie": {
+        "name": "Staat und Demokratie",
+        "color": "#481B79"
+    },
+    "wirtschaft": {
+        "name": "Wirtschaft und Finanzmärkte",
+        "color": "#edc92d"
+    }
+}
