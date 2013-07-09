@@ -15,7 +15,7 @@ for el in doc.findall('.//body/div/*'):
     ecls = el.get('class') or ''
     #print [ecls, ]
     eltext = el.text_content().strip()
-    if ecls in ['ft00', 'ft03', 'ft09', 'ft05'] or el.tag == 'img':
+    if ecls in ['ft00', 'ft03', 'ft09', 'ft05', 'ft04'] or el.tag == 'img':
         # or ecls == 'ft05':
         #text.append(NEWPAGE)
         continue
