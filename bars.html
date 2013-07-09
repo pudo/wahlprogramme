@@ -65,9 +65,9 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.0.1/jquery.qtip.min.js"></script>
     <script>
         $(function() {
-            var partiesDfd = $.getJSON('parties.json'),
-                topicsDfd = $.getJSON('topics.json'),
-                sharesDfd = $.getJSON('topic_shares.json');
+            var partiesDfd = $.getJSON('json/parties.json'),
+                topicsDfd = $.getJSON('json/topics.json'),
+                sharesDfd = $.getJSON('json/topic_shares.json');
 
             var $bars = $('#bars'),
                 $skeleton = $('#skeleton');
@@ -92,6 +92,7 @@
                         var share = shares[party_id][topic];
                         var fieldWidth = Math.floor(width * (share/100));
                         $e = $('<div class="field">')
+                                .addClass('topic-' + topic)
                                 .css('width', fieldWidth + 'px')
                                 .css('background-color', topics[topic] ? topics[topic].color : '#666');
                         $e.qtip({
@@ -107,8 +108,19 @@
                         $bar.append($e);
                     });
                 });
+                
+                var $fields = $('.field');
+                $fields.hover(
+                    function(e) {
+                        var clazz = $(e.target).attr('class').replace(' ', '.');
+                        $fields.css('opacity', 0.4);
+                        $('.' + clazz).css('opacity', 1);
+                        //console.log(clazz);
+                    },
+                    function(e) {
+                        $fields.css('opacity', 1);
+                    });
             });
-
         });
     </script>
   </body>
