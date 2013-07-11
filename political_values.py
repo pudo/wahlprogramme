@@ -1,4 +1,5 @@
 import math
+import json
 from sections import load_platforms
 from pprint import pprint
 from collections import defaultdict
@@ -33,5 +34,11 @@ if __name__ == '__main__':
                     pct = math.floor((float(token_offset)/(lengths[party]+1))*100)
                     scores[party][label][int(pct)] += 1
         scores[party] = dict(scores[party])
-    pprint(lengths)
+    #pprint(lengths)
     pprint(scores)
+    data = {
+        'lengths': lengths,
+        'scores': scores
+    }
+    with open('data/political_values.json', 'wb') as fh:
+        json.dump(data, fh)

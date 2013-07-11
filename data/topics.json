@@ -16,7 +16,7 @@
         "color": "#14388C"
     },
     "familienpolitik": {
-        "name": "Familienpolitik",
+        "name": "Familienpolitik und Gleichberechtigung",
         "color": "#C22769"
     },
     "fiskal_steuern": {
@@ -44,7 +44,7 @@
         "color": "#449256"
     },
     "recht": {
-        "name": "Recht, Integration, Gleichberechtigung und Inneres",
+        "name": "Recht, Integration und Sicherheit",
         "color": "#C22769"
     },
     "verkehr_stadt": {
@@ -57,7 +57,7 @@
     },
     "demokratie": {
         "name": "Staat und Demokratie",
-        "color": "#481B79"
+        "color": "#C22769"
     },
     "wirtschaft": {
         "name": "Wirtschaft und Finanzmärkte",
