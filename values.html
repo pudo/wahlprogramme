@@ -19,6 +19,7 @@
     <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.0.1/jquery.qtip.min.css" />
 
     <style>
+
         #airlock {
             margin-top: 2em;
         }
@@ -38,6 +39,33 @@
             display: inline-block;
             height: 3em;
         }
+
+        .bar {
+            position: relative;
+        }
+
+        .bar .sections {
+            position: absolute;
+        }
+
+        .bar .line {
+            position: absolute;
+            top: 0px;
+            height: 3em;
+            width: 1px;
+        }
+
+        #legend {
+            list-style-type: none;
+            margin: 0;
+        }
+
+        #legend li {
+            display: inline-block;
+            border-left: 1.4em solid black;
+            padding-right: 2em;
+            padding-left: 0.5em;
+        }
     </style>
   </head>
   <body class="body-data">
@@ -45,12 +73,15 @@
       <div class="row">
         <div class="span12">
             <h3>Wahlprogramme der Parteien zur Bundestagswahl 2103</h3>
-            <p>Abschnitte nach thematischem Bezug</p>
-
+            <p>Welche Werte liegen den unterschiedlichen Themengebieten zugrunde?</p>
+            <ul id="legend"></ul>
             <div id="bars">
                 <div id="skeleton" style="display: none;">
                     <h4 class="party-name">APPD</h4>
-                    <div class="bar"></div>
+                    <div class="bar">
+                        <div class="sections"></div>
+                        <div class="terms"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,40 +98,56 @@
     <script>
         $(function() {
             var partiesDfd = $.getJSON('data/parties.json'),
-                topicsDfd = $.getJSON('data/topics.json'),
-                sharesDfd = $.getJSON('data/topic_shares.json');
+                sectionsDfd = $.getJSON('data/sections_titles.json'),
+                valuesDfd = $.getJSON('data/political_values.json');
 
             var $bars = $('#bars'),
-                $skeleton = $('#skeleton');
+                $skeleton = $('#skeleton'),
+                $legend = $('#legend');
 
             var colors = d3.scale.category20b();
+            var sectionColors = function(i) {
+                return i % 2 == 0 ? '#e1e1e1' : '#eee';
+            }
+            var value_colors = {
+                'Freiheit': 'rgb(140, 162, 82)',
+                'Sicherheit': 'rgb(189, 158, 57)',
+                'Gleichheit': 'rgb(173, 73, 74)'
+            }
 
-            $.when(partiesDfd, topicsDfd, sharesDfd).done(function(parties, topics, shares) {
+            $.each(value_colors, function(title, color) {
+                var $el = $('<li>' + title + '</li>');
+                $el.css('border-left-color', color);    
+                $legend.append($el)
+            });
+
+            $.when(partiesDfd, sectionsDfd, valuesDfd).done(function(parties, sections, values) {
                 parties = parties[0];
-                topics = topics[0];
-                shares = shares[0];
-
-                var topic_names = $.map(topics, function(k, v) { return v; });
-                topic_names.sort();
+                sections = sections[0];
+                values = values[0];
                 
                 $.each(parties, function(party_id, party) {
                     $p = $skeleton.clone().attr("id", party_id);
                     $p.find('.party-name').html(party.name);
                     $bars.append($p);
-                    $bar = $p.find('.bar');
+                    $sections = $p.find('.sections');
+                    $terms = $p.find('.bar');
                     $p.show();
                     
                     var width = $p.outerWidth();
-                    $.each(topic_names, function(i, topic) {
-                        var share = shares[party_id][topic];
-                        var fieldWidth = width * (share/100);
+                    $.each(sections[party_id], function(i, section) {
+                        //console.log(section);
+                        var share = section.tokens / section.total;
+                        //console.log(share);
+                        //var fieldWidth = Math.floor(width * share);
+                        var fieldWidth = width * share;
                         $e = $('<div class="field">')
-                                .addClass('topic-' + topic)
+                                //.addClass('topic-' + topic)
                                 .css('width', fieldWidth + 'px')
-                                .css('background-color', colors(i));
+                                .css('background-color', sectionColors(i));
                         $e.qtip({
                             content: {
-                                text: topics[topic].name
+                                text: section.short_title
                             },
                             position: {
                                 my: 'top center',
@@ -108,21 +155,20 @@
                             }, 
                             style: 'qtip-dark'
                         });
-                        $bar.append($e);
+                        $sections.append($e);
                     });
-                });
-                
-                var $fields = $('.field');
-                $fields.hover(
-                    function(e) {
-                        var clazz = $(e.target).attr('class').replace(' ', '.');
-                        $fields.css('opacity', 0.4);
-                        $('.' + clazz).css('opacity', 1);
-                        //console.log(clazz);
-                    },
-                    function(e) {
-                        $fields.css('opacity', 1);
+
+                    $.each(values.scores[party_id], function(title, locations, i) {
+                        $.each(locations, function(percent, value) {
+                            var offset = width * (parseInt(percent, 10)/100);
+                            $e = $('<div class="line">')
+                                //.addClass('topic-' + topic)
+                                .css('left', offset + 'px')
+                                .css('border-left', (value + 0.5) + 'px solid ' + value_colors[title]);
+                            $terms.append($e);
+                        });
                     });
+                }); 
             });
         });
     </script>

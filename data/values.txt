@@ -1,6 +1,8 @@
 Freiheit: freiheit,freiheiten,freiheitlich,wahlfreiheit,wahlfreiheiten
 Sicherheit: sicherheit,sicherheiten
 Gleichheit: gleichheit,gleichberechtigung,gleichstellung,chancengleichheit,gerechtigkeit,gerecht,gerechter
-Toleranz: toleranz,tolerant,tolerante,tolerantes
-Offenheit: offenheit,offen,offene
-Demokratie: demokratie,demokratisch,demokratische
+#Toleranz: toleranz,tolerant,tolerante,tolerantes
+#Offenheit: offenheit,offen,offene
+#Demokratie: demokratie,demokratisch,demokratische
+
+# Erfolg, Wohlstand, Aufstieg, Treue, Verlässlichkeit

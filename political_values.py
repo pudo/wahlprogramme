@@ -9,6 +9,8 @@ def load_values():
     values = {}
     with open('data/values.txt', 'rb') as fh:
         for line in fh:
+            if line.strip().startswith('#'):
+                continue
             label, terms = line.split(':')
             terms = [t.strip() for t in terms.split(',')]
             for term in terms:
