@@ -62,6 +62,7 @@
     </footer>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.0.1/jquery.qtip.min.js"></script>
     <script>
         $(function() {
@@ -71,6 +72,8 @@
 
             var $bars = $('#bars'),
                 $skeleton = $('#skeleton');
+
+            var colors = d3.scale.category20b();
 
             $.when(partiesDfd, topicsDfd, sharesDfd).done(function(parties, topics, shares) {
                 parties = parties[0];
@@ -94,7 +97,7 @@
                         $e = $('<div class="field">')
                                 .addClass('topic-' + topic)
                                 .css('width', fieldWidth + 'px')
-                                .css('background-color', topics[topic] ? topics[topic].color : '#666');
+                                .css('background-color', colors(i));
                         $e.qtip({
                             content: {
                                 text: topics[topic].name
