@@ -59,7 +59,7 @@ def section_terms(model, section, base=ALL):
     #print "MAX", max_f, max(terms.values()), terms.values()
     tf_idfs = {}
     for term, count in terms.items():
-        if count < 2:
+        if count < 3:
             continue
         tf = 0.5 + ((0.5*(count/total))/max_f)
         tf_idfs[term] = tf * model[base].get(term, 0)

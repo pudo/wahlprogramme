@@ -1,15 +1,19 @@
 from lxml import html
 import re
+from pdfclean import *
 
 fh = open('html/fdp.html', 'rb')
 html_ = fh.read()
 html_ = html_.replace('-<br/>', '')
+html_ = html_.replace('<br/>&#160;<br/>', '\n\n')
+
 html_ = html_.replace('&#160;', ' ')
 doc = html.fromstring(html_)
 fh.close()
 
 NEWPAGE = 'NEWPAGE'
 text = []
+last_style = None
 
 for el in doc.findall('.//body/div/*'):
     ecls = el.get('class') or ''
@@ -33,8 +37,11 @@ for el in doc.findall('.//body/div/*'):
         if el.tail is not None:
             text.append(el.tail.strip())
     elif el.tag == 'p':
-        if 'left:81px' in el.get('style', ''):
+        style = el.get('style', '')
+        if 'left:81px' in style:
             eltext = '* ' + eltext
+        #elif check_paragraph(last_style, style, 30):
+        #    eltext = '\n' + eltext
         if eltext is not None:
             text.append(eltext.strip())
         text.append('')

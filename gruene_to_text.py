@@ -1,5 +1,7 @@
 from lxml import html
 import re
+from pdfclean import *
+
 
 fh = open('html/gruene.html', 'rb')
 html_ = fh.read()
@@ -10,6 +12,7 @@ fh.close()
 
 NEWPAGE = 'NEWPAGE'
 text = []
+last_style = None
 
 for el in doc.findall('.//body/div/*'):
     ecls = el.get('class') or ''
@@ -34,8 +37,11 @@ for el in doc.findall('.//body/div/*'):
         if el.tail is not None:
             text.append(el.tail.strip())
     elif el.tag == 'p':
-        if 'left:369px' in el.get('style', ''):
+        style = el.get('style', '')
+        if 'left:369px' in style:
             eltext = '\n* ' + eltext
+        if 'left:81' in style or 'left:123' in style:
+            eltext = '\n\n' + eltext
         if eltext is not None:
             text.append(eltext)
         #text.append('')

@@ -16,7 +16,8 @@ def normalize(text):
             filtered.append(' ')
         elif cat.startswith('M'):
             # marks, such as umlauts
-            continue
+            #continue
+            filtered.append(char)
         elif cat.startswith('Z'):
             # newlines, non-breaking etc.
             filtered.append(' ')

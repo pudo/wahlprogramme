@@ -2,3 +2,4 @@
 *.DS_Store
 html/*.png
 .env
+node_modules/*

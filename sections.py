@@ -1,5 +1,8 @@
 import os
+import re
 import json
+from lxml import html
+from hashlib import sha1
 from common import PARTIES, load_doc
 from text import tokenize
 from nomenklatura import Dataset
@@ -10,6 +13,7 @@ class Section(object):
     def __init__(self, party):
         self.party = party
         self.texts = []
+        self.elem = html.Element("div")
         self.title = None
         self.level = None
         self.topic = 'intro'
@@ -29,13 +33,29 @@ class Section(object):
             self._tokens = list(tokenize(self.text))
         return self._tokens
 
+    @property
+    def key(self):
+        text = self.party + (self.title or 'Unbenannt')
+        return sha1(text.encode('ascii', 'ignore')).hexdigest()[:5]
+
+    @property
+    def sentences(self):
+        #return re.split(r'([\S])+\.\s', self.text)
+        _s = []
+        for sentence in self.text.split('.'):
+            sentence = sentence.strip()
+            if len(sentence):
+                _s.append(sentence)
+        return _s
+
     def to_json(self):
         return {
             'party': self.party,
             'texts': self.texts,
             'title': self.title,
             'level': self.level,
-            'topic': self.topic
+            'topic': self.topic,
+            'key': self.key
         }
 
     def __len__(self):
@@ -62,25 +82,28 @@ def extract_sections(party):
 
     current = Section(party)
     for i, h in enumerate(doc.findall('.//*')):
-            if h.tag in ['h1', 'h2']:
-                if current.valid:
-                    yield current
-                current = Section(party)
-                current.title = h.text
-                current.level = h.tag[1:]
-                fp = '[%s:%s] %s' % (party, h.tag, h.text)
-                try:
-                    entity = nomenklatura.lookup(fp)
-                    current.topic = entity.name
-                except Exception, e:
-                    print [fp]
-                    print e
-            current.texts.append(h.text)
+        if h.tag in ['h1', 'h2']:
+            if current.valid:
+                yield current
+            current = Section(party)
+            current.title = h.text
+            current.level = h.tag[1:]
+            fp = '[%s:%s] %s' % (party, h.tag, h.text)
+            try:
+                entity = nomenklatura.lookup(fp)
+                current.topic = entity.name
+            except Exception, e:
+                print [fp]
+                print e
+        if h.getparent() == doc:
+            print "XXX", h
+        current.texts.append(h.text)
     if current.valid:
         yield current
 
 
 def load_platforms():
+    print "Loading serialized platforms..."
     sections = {}
     with open('data/sections.json', 'rb') as fh:
         data = json.load(fh)

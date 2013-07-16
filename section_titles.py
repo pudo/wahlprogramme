@@ -24,7 +24,8 @@ if __name__ == '__main__':
                 'short_title': short_title or 'Unbenannt',
                 'tokens': len(section),
                 'total': lengths[party],
-                'topic': section.topic
+                'topic': section.topic,
+                'key': section.key
             })
 
     with open('data/sections_titles.json', 'wb') as fh:

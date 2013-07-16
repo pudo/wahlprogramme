@@ -1,5 +1,6 @@
 from lxml import html
 import re
+from pdfclean import *
 
 fh = open('html/spd.html', 'rb')
 html_ = fh.read()
@@ -8,17 +9,14 @@ html_ = html_.replace('&#160;', ' ')
 doc = html.fromstring(html_)
 fh.close()
 
-NEWPAGE = 'NEWPAGE'
 text = []
+last_style = None
 
 for el in doc.findall('.//body/div/*'):
     ecls = el.get('class') or ''
     #print [ecls, ]
     eltext = el.text_content()
-    if ecls == 'ft00':
-        #text.append(NEWPAGE)
-        continue
-    elif ecls == 'ft01' or el.tag == 'img':
+    if ecls == 'ft00' or ecls == 'ft01' or el.tag == 'img' or ecls == 'ft08':
         continue
     elif ecls == 'ft02':
         eltext = eltext.upper().strip()
@@ -33,8 +31,14 @@ for el in doc.findall('.//body/div/*'):
         if el.tail is not None:
             text.append(el.tail.strip())
     elif el.tag == 'p':
+        style = el.get('style', '')
+        if 'left:74px' in style:
+            eltext = '\n* ' + eltext
+        elif check_paragraph(last_style, style, 30):
+            eltext = '\n' + eltext
+        last_style = style
         if eltext is not None:
-            text.append(eltext.strip())
+            text.append(eltext)
         text.append('')
         if el.tail is not None:
             text.append(el.tail.strip())
@@ -42,43 +46,13 @@ for el in doc.findall('.//body/div/*'):
         #pass
         print [el.tag, el.text, el.tail]
 
-fh = open('markdown/spd.mdown', 'wb')
 text = '\n'.join(text)
 
-text = text.replace(NEWPAGE, '\n\n')
 text = text.replace('\n\n\n', '\n')
 text = text.replace('-\n', '')
 
-while True:
-    ntext = re.sub('# (.*)\n\n\n# ', '# \g<1> ', text)
-    if ntext == text:
-        break
-    text = ntext
+text = clean_spacing(text)
 
-
-while True:
-    ntext = re.sub('## (.*)\n\n\n## ', '## \g<1> ', text)
-    if ntext == text:
-        break
-    text = ntext
-#text = re.sub('# ([0-9]+.).\n\n# ', '# \g<1> ', text)
-#text = text.replace('-\n\n# ', '')
-
-text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)
-
-while '  ' in text:
-    text = text.replace('  ', ' ')
-
-#texts = []
-#for line in text.split('\n'):
-#    if re.match('# \d+. .*', line):
-#        pass
-#    elif re.match('# \d+.\d+. .*', line):
-#        line = '#' + line
-#    elif re.match('# .*', line):
-#        line = '##' + line
-#    texts.append(line)
-#text = '\n'.join(texts)
-
+fh = open('markdown/spd.mdown', 'wb')
 fh.write(text.encode('utf-8'))
 fh.close()
