@@ -36,4 +36,5 @@ analyze:
 	python sections.py
 	python section_titles.py
 	python topics.py
+	python to_html.py
 	python political_values.py

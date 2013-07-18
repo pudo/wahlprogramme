@@ -16,7 +16,7 @@ for el in doc.find('.//body').getchildren():
         text.append(NEWPAGE)
     elif el.tag == 'b':
         if el.text and len(el.text.strip()):
-            text.append('\n# ' + el.text + '\n')
+            text.append('\n\n# ' + el.text + '\n')
         if el.tail is not None:
             text.append(el.tail.strip())
     elif el.tag == 'br':
@@ -33,7 +33,9 @@ fh = open('markdown/cdu.mdown', 'wb')
 text = '\n'.join(text)
 text = text.replace('\n\n', '\n')
 text = text.replace('\n\n' + NEWPAGE + '\n\n', '')
-text = re.sub('(#+ .*)\n\n#+ ', '\g<1> ', text)
+text = re.sub('(### .*)\n+### ', '\g<1> ', text)
+text = re.sub('(## .*)\n+## ', '\g<1> ', text)
+text = re.sub('(# .*)\n+# ', '\g<1> ', text)
 text = text.replace('-\n\n# ', '')
 text = text.replace(NEWPAGE, '')
 text = re.sub('([^\n])\n([^\n])', '\g<1> \g<2>', text)

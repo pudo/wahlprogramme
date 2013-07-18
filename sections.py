@@ -15,7 +15,7 @@ class Section(object):
         self.texts = []
         self.elem = html.Element("div")
         self.title = None
-        self.level = None
+        self.level = "1"
         self.topic = 'intro'
 
     @property
@@ -95,8 +95,8 @@ def extract_sections(party):
             except Exception, e:
                 print [fp]
                 print e
-        if h.getparent() == doc:
-            print "XXX", h
+        #if h.getparent() == doc:
+        #    #print "XXX", h
         current.texts.append(h.text)
     if current.valid:
         yield current
