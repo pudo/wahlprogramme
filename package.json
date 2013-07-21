@@ -1,0 +1,11 @@
+{
+  "name": "wahlprogramme",
+  "version": "0.0.1",
+  "main": "search.coffee",
+  "dependencies": {
+    "coffee-script": "*",
+    "express": "3.x",
+    "underscore": ">= 1.4.4",
+    "solr": "0.2.2"
+  }
+}
