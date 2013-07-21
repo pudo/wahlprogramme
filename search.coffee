@@ -45,6 +45,7 @@ indexAdd = (data, callback) ->
 indexQuery = (q, options, callback) ->
   options.fl = 'score,key,party'
   #options.df = 'text'
+  options.bf = 'title^10 topic^5'
   options.qf = 'title^10 topic^5 body'
   options.defType = 'edismax'
   client = getClient()
