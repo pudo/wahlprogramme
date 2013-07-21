@@ -18,6 +18,7 @@ def party_html(party, sections):
 
     doc.attrib['data-party'] = party
     doc.attrib['data-party-name'] = PARTIES[party]['name']
+    doc.attrib['class'] = 'platform'
 
     for i, el in enumerate(doc.findall('./*')):
         assert el.tag != 'li'

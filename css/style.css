@@ -1,0 +1,47 @@
+
+body {
+  font-size: 1em;
+}
+
+body, p {
+  font-family: 'SpiegelSansWeb', Verdana, sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'SpiegelHeadlineWeb', Verdana, sans-serif;   
+}
+
+#airlock {
+    margin: 2em auto;
+}
+
+.section p, .section li {
+    font-family: 'Georgia', serif;
+    line-height: 1.5em;
+    font-size: 1.1em;
+}
+
+.section h1 {
+    font-size: 2em;
+}
+
+.section h2 {
+    font-size: 1.9em;
+}
+
+.section h3 {
+    font-size: 1.7em;
+}
+
+#toc {
+    list-style-type: none;
+    margin: 0;
+}
+
+#toc li.level-1 {
+    margin: 0.5em 0 0 0;
+}
+
+#toc li.level-2 {
+    margin: 0.5em 0 0 1em;
+}

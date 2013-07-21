@@ -1,3 +1,4 @@
+#coding: utf-8
 from lxml import html
 import re
 from pdfclean import *
@@ -56,6 +57,8 @@ text = '\n'.join(text)
 
 text = text.replace('\n\n', '\n')
 text = text.replace('-\n', '')
+text = text.replace(u'•\t', '\n* ')
+
 
 while True:
     ntext = re.sub('# (.*)\n\n\n# ', '# \g<1> ', text)

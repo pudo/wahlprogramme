@@ -2,8 +2,34 @@
 layout: default
 ---
 
+<h2 class="page-header">Wahlprogramm von {{page.title}}</h2>
+
 <div class="row">
-    <div class="span6">
+    <div class="span5">
+        <strong>Inhalte</strong>
+        <ul id="toc">
+        </ul>
+    </div>
+    <div class="span7">
         {{content}}
     </div>
 </div>
+
+<script>
+    $(function() {
+        var $toc = $('#toc'),
+            $pageTitle = $('.page-header'),
+            $platform = $('.platform'),
+            $sections = $('.section');
+
+        $pageTitle.html('Wahlprogramm von ' + $platform.data('party-name'));
+        var tocList = '';
+        $sections.each(function(i, section) {
+            var $s = $(section);
+            tocList += '<li class="level-'+$s.data('level')+'"><a href="#'+$s.data('key')+'">'+$s.data('title')+'</a></li>';
+        });
+        $toc.html(tocList);
+
+
+    });
+</script>
