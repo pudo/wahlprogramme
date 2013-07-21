@@ -24,7 +24,7 @@ getClient = () ->
 
 indexDelete = (callback) ->
   client = getClient()
-  client.delete null, '*:*', (err, res) ->
+  client.del null, '*:*', (err, res) ->
     if err?
       callback err
     client.commit (err) ->
