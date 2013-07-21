@@ -159,17 +159,33 @@
                             jsonpCallback: 'search',
                             cache: true,
                             url: 'http://d1czwlmofpc4sp.cloudfront.net/search/',
-                            data: {q: $(e.target).val()}
+                            data: {q: $(e.target).val(), gen: 2}
                         });
                         req.done(function(data) {
                             $fields.css('background-color', '#f3f3f3');
-                            scale = new chroma.ColorScale({
-                                colors: ['#eee', '#8e0152'],
-                                limits: [0, data.maxScore]
+                            var scores = [0];
+                            $.each(data.sections, function(i, e) { scores.push(e); });
+                            scores.sort(function(a, b) {
+                                return a - b;
                             });
+                            //console.log(scores);
+                            /*var scale = new chroma.ColorScale({
+                                colors: ['#eee', '#8e0152'],
+                                //limits: [0, data.maxScore],
+                                limits: scores
+                                //limits: chroma.limits(scores, 'eq', 5)
+                                //mode: 'hcl'
+                            });*/
+                            var scale = chroma.scale('YlGn').domain(scores, 6, 'qua');
 
-                            $.each(data.sections, function(e, s) {
-                                $('#section-' + e).css('background-color', scale.get(s));
+                            /*$.each(data.sections, function(e, s) {
+                                $('#section-' + e).css('background-color', scale(s));
+                            });*/
+                            $fields.each(function(i, e) {
+                                //console.log(e);
+                                var section = e.id.split('-')[1];
+                                $(e).css('background-color', scale(data.sections[section]||0));
+                                //console.log(section);
                             });
                         });    
                     }, 100);
