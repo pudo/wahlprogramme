@@ -91,6 +91,7 @@ app.get '/search', (req, res) ->
       res.jsonp 500,
         status: 'error',
         error: err
+    console.log data
     r = data.response
     r.status = 'ok'
     r.sections = {}
