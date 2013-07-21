@@ -36,7 +36,7 @@ class Section(object):
     @property
     def key(self):
         text = self.party + (self.title or 'Unbenannt')
-        return sha1(text.encode('ascii', 'ignore')).hexdigest()[:5]
+        return sha1(text.encode('ascii', 'ignore')).hexdigest()[:7]
 
     @property
     def sentences(self):

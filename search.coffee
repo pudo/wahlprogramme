@@ -22,6 +22,14 @@ getClient = () ->
     path: config.solr.path
     auth: config.solr.auth
 
+indexDelete = (callback) ->
+  client = getClient()
+  client.delete null, '*:*', (err, res) ->
+    if err?
+      callback err
+    client.commit (err) ->
+      callback err
+
 indexAdd = (data, callback) ->
   add_options =
     overwrite: true
@@ -60,21 +68,24 @@ app.get '/reload', (req, res) ->
 
     data = JSON.parse raw
     #console.log data
-    for [party, sections] in _.pairs data
-      for section in sections
-        data =
-          title: section.title
-          key: section.key
-          id: section.key
-          party: section.party
-          topic: section.topic
-          level: section.level
-          body: section.texts.join '\n'
 
-        #console.log data
-        indexAdd data, (err) ->
-          if err?
-            console.warn err
+    indexDelete () ->
+      for [party, sections] in _.pairs data
+        for section in sections
+          data =
+            title: section.title
+            key: section.key
+            id: section.key
+            party: section.party
+            topic: section.topic
+            level: section.level
+            body: section.texts.join '\n'
+
+          #console.log data
+          indexAdd data, (err) ->
+            if err?
+              console.warn err
+
     res.jsonp 200,
       status: 'ok',
     #  raw: raw
