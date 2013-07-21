@@ -36,7 +36,9 @@ indexAdd = (data, callback) ->
 
 indexQuery = (q, options, callback) ->
   options.fl = 'score,key,party'
-  options.df = 'text'
+  #options.df = 'text'
+  options.qf = 'title^10 topic^5 body'
+  options.defType = 'edismax'
   client = getClient()
   client.query q, options, (err, res) ->
     if err?
@@ -86,7 +88,8 @@ app.get '/status', (req, res) ->
 app.get '/search', (req, res) ->
   options =
     rows: 4000
-  indexQuery req.query.q, options, (data, err) ->
+  qy = req.query.q + '*'
+  indexQuery qy, options, (data, err) ->
     if err?
       res.jsonp 500,
         status: 'error',
