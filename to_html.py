@@ -44,13 +44,7 @@ def party_html(party, sections):
         p.remove(el)
         group.append(el)
 
-    with open('platforms/%s.html' % party, 'wb') as fh:
-        fh.write("""---
-layout: platform
-title: %s
----
-
-""" % PARTIES[party]['name'].encode('utf-8'))
+    with open('data/html/%s.html' % party, 'wb') as fh:
         fh.write(html.tostring(doc))
 
 
