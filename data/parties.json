@@ -1,17 +1,27 @@
 {
     "cdu": {
-        "name": "CDU/CSU"
+        "name": "CDU/CSU",
+        "title": "Regierungsprogramm 2013-2017",
+        "tagline": "Gemeinsam erfolgreich für Deutschland"
     },
     "spd": {
-        "name": "SPD"
+        "name": "SPD",
+        "title": "Das Regierungsprogramm 2013-2017",
+        "tagline": "Das wir entscheidet"
     },
     "fdp": {
-        "name": "FDP"
+        "name": "FDP",
+        "title": "Bürgerprogramm 2013",
+        "tagline": "Damit Deutschland stark bleibt."
     },
     "gruene": {
-        "name": "Bündnis 90/Die Grünen"
+        "name": "Bündnis 90/Die Grünen",
+        "title": "Bundestagswahlprogramm 2013",
+        "tagline": "Zeit für den grünen Wandel"
     },
     "linke": {
-        "name": "Die LINKE."
+        "name": "Die LINKE.",
+        "title": "Wahlprogramm zur Bundestagswahl 2013",
+        "tagline": "100% Sozial"
     }
 }

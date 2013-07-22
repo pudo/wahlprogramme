@@ -159,7 +159,7 @@
                             jsonpCallback: 'search',
                             cache: true,
                             url: 'http://d1czwlmofpc4sp.cloudfront.net/search/',
-                            data: {q: $(e.target).val(), gen: 2}
+                            data: {q: $(e.target).val() || 'würstchen', gen: 2}
                         });
                         req.done(function(data) {
                             $fields.css('background-color', '#f3f3f3');
