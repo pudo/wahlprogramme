@@ -35,7 +35,7 @@ class Section(object):
 
     @property
     def key(self):
-        text = self.party + (self.title or 'Unbenannt')
+        text = self.party + (self.title or 'Einleitung')
         return sha1(text.encode('ascii', 'ignore')).hexdigest()[:7]
 
     @property
