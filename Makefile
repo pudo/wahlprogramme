@@ -38,3 +38,6 @@ analyze:
 	python topics.py
 	python to_html.py
 	python political_values.py
+
+update:
+	cp -R data/* ../happ/politik/2013/wahlprogramme/v0/dev/data
