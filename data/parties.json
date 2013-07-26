@@ -28,5 +28,11 @@
         "title": "Bundestagswahlprogramm 2013",
         "tagline": "Zeit für den grünen Wandel",
         "color": "#329A07"
+    },
+    "piraten": {
+        "name": "Piratenpartei",
+        "title": "Wahlprogramm zur Bundestagswahl 2013",
+        "tagline": "Wir stellen das mal infrage",
+        "color": "#ff6600"
     }
 }

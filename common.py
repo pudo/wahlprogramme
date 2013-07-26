@@ -2,7 +2,7 @@
 from lxml import html
 from markdown import markdown
 
-PARTIES = ['fdp', 'cdu', 'gruene', 'spd', 'linke']
+PARTIES = ['fdp', 'cdu', 'gruene', 'spd', 'linke', 'piraten']
 
 
 #engine = dataset.connect('sqlite:///programme.sqlite3')

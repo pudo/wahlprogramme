@@ -8,6 +8,7 @@ download:
 	curl -o pdfs/fdp.pdf http://www.fdp.de/files/565/B_rgerprogramm_A5_Online-Fassung.pdf
 	curl -o pdfs/spd.pdf http://www.spd.de/linkableblob/96686/data/20130415_regierungsprogramm_2013_2017.pdf 
 	curl -o pdfs/cdu.pdf http://www.cdu.de/sites/default/files/media/dokumente/cdu_regierungsprogramm_2013-2017.pdf
+	curl -o pdfs/piraten.pdf http://wiki.piratenpartei.de/wiki/images/c/c1/Wahlprogramm_zur_Bundestagswahl_2013_Onlineversion.pdf
 
 extract:
 	mkdir -p html
@@ -31,6 +32,10 @@ extract:
 	pdftohtml -noframes -c -f 7 -l 319 pdfs/gruene.pdf html/gruene.html
 	rm html/gruene*.png
 	python gruene_to_text.py
+
+	pdftohtml -noframes -c -f 7 -l 165 pdfs/piraten.pdf html/piraten.html
+	rm html/piraten*.png
+	python piraten_to_text.py
 
 analyze:
 	python sections.py
