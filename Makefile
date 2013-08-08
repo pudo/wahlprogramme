@@ -42,6 +42,8 @@ analyze:
 	python section_titles.py
 	python topics.py
 	python to_html.py
+	python classify.py
+	python sentences.py
 	python political_values.py
 
 update:
