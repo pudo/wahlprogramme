@@ -3,36 +3,42 @@
         "name": "CDU/CSU",
         "title": "Regierungsprogramm 2013-2017",
         "tagline": "Gemeinsam erfolgreich für Deutschland",
+        "url": "http://www.cdu.de/artikel/regierungsprogramm-zum-herunterladen",
         "color": "#0A045A"
     },
     "spd": {
         "name": "SPD",
         "title": "Das Regierungsprogramm 2013-2017",
         "tagline": "Das wir entscheidet",
+        "url": "http://www.spd.de/95466/regierungsprogramm_2013_2017.html",
         "color": "#E2001A"
     },
     "fdp": {
         "name": "FDP",
         "title": "Bürgerprogramm 2013",
         "tagline": "Damit Deutschland stark bleibt",
+        "url": "http://www.fdp.de/Der-Weg-zum-Buergerprogramm/1793b658/index.html",
         "color": "#FEC803"
     },
     "linke": {
         "name": "Die LINKE.",
         "title": "Wahlprogramm zur Bundestagswahl 2013",
         "tagline": "100% Sozial",
+        "url": "http://www.die-linke.de/wahlen/wahlprogramm/wahlprogramm/",
         "color": "#B837C1"
     },
     "gruene": {
         "name": "Bündnis 90/Die Grünen",
         "title": "Bundestagswahlprogramm 2013",
         "tagline": "Zeit für den grünen Wandel",
+        "url": "http://www.gruene.de/partei/gruenes-wahlprogramm-2013.html",
         "color": "#329A07"
     },
     "piraten": {
         "name": "Piratenpartei",
         "title": "Wahlprogramm zur Bundestagswahl 2013",
         "tagline": "Wir stellen das mal infrage",
+        "url": "http://wiki.piratenpartei.de/Wahlen/Bund/2013/Wahlprogramm",
         "color": "#ff6600"
     }
 }

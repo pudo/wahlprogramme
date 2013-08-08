@@ -7,15 +7,15 @@ from text import normalize, tokenize
 from pprint import pprint
 import json
 
-engine = dataset.connect('sqlite:///sentences.db')
-table = engine['sentences']
+engine = dataset.connect('postgresql://localhost/wahlprogramme')
+sentences = engine['sentences']
 
 SENTENCE = re.compile(r'[\.!?]\s+', re.M)
 CLEANUP = re.compile(r'\s+', re.M)
 EXCEPTIONS = map(re.compile, ['Mio$', 'Mrd?$', 'Art$', '\sz$', 'z\. ?B$', '\sd$', 'd\. ?h$', '\su$', 'u. ?a$', 'bzw$', '\d+$', ' sog'])
 FORMATTING = re.compile('^(\s?[\#\*]+)?\s*([IVX0-9]{1,2}\.[IVX0-9]{0,2}\.?\s)?\s*(.*)')
 
-def sentences(section):
+def split_sentences(section):
     sens = []
     for s in SENTENCE.split(section.text):
         s = s.strip()
@@ -35,6 +35,7 @@ def sentences(section):
     #pprint(sens)
     return sens
 
+
 def check_valid(sentence):
     if len(sentence.split()) < 3 or len(sentence.strip()) < 10:
         return False
@@ -42,12 +43,14 @@ def check_valid(sentence):
         return False
     return True
 
-def split_sentences():
+
+def save_sentences():
     platforms = load_platforms()
     lengths = defaultdict(list)
+    sentences.update({'valid': False}, {})
     for party, sections in platforms.items():
         for section in sections:
-            for i, sentence in enumerate(sentences(section)):
+            for i, sentence in enumerate(split_sentences(section)):
                 lengths[party].append(len(sentence.split()))
                 data = {
                     'num': i,
@@ -58,12 +61,12 @@ def split_sentences():
                 }
                 #if not check_valid(sentence):
                 data['valid'] = check_valid(sentence)
-                table.upsert(data, ['num', 'section'])
+                sentences.upsert(data, ['num', 'section'])
 
     for party, sens in lengths.items():
         avg = sum(sens) / len(sens)
         print 'PARTY', party, 'AVG', avg
 
 if __name__ == '__main__':
-    split_sentences()
+    save_sentences()
 
