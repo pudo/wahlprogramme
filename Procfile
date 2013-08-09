@@ -1,1 +1,1 @@
-web: coffee search.coffee
+web: coffee app.coffee

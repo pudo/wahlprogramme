@@ -7,6 +7,7 @@ fs = require 'fs'
 config =
   port: process.env.PORT or 3000
   solr: url.parse process.env.WEBSOLR_URL or 'http://localhost:8983/solr/wahlprogramme'
+  db_url: process.env.DB_URL or 'tcp://localhost/twitter'
 
 app = express()
 app.use express.logger()

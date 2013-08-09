@@ -6,6 +6,7 @@
     "coffee-script": "*",
     "express": "3.x",
     "underscore": ">= 1.4.4",
+    "ph": ">= 2.3.1",
     "solr": "0.2.2"
   }
 }
